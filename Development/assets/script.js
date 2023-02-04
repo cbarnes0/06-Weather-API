@@ -64,4 +64,39 @@ function showWeatherdata(data) {
     currentTemp.text(todayTemp + " \u00B0F");
     currentWSpeed.text(todayWind + " MPH");
     currentHumid.text(todayHumid + "%");
+};
+
+
+function fiveDayWeatherdata() {
+    fetch(geoCode, {
+        method: 'GET',
+    })
+
+    .then(function(response) {
+        return response.json();
+    })
+    .then(function(data) {
+
+        latitude = data[0].lat;
+        longitude = data[0].lon;
+
+        return { latitude, longitude };
+    })
+    .then(function({ latitude, longitude}) {
+        var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+
+        fetch(fiveDays, {
+            method: 'GET',
+        })
+
+        .then(function(response) {
+            return response.json();
+        })
+        .then(function(response) {
+            console.log(response);
+
+
+        })
+    });
 }
+fiveDayWeatherdata();
