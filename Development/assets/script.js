@@ -31,7 +31,7 @@ fetch(geoCode, {
     return latitude, longitude;
   })
   .then(function() {
-    var queryURL = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
+    var queryURL = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
 
     fetch(queryURL, {
         method: 'GET',
@@ -48,17 +48,17 @@ fetch(geoCode, {
   getWeatherdata();
 
 function showWeatherdata(data) {
-    var todayDate = data.list[0].dt_txt.slice(0, 10);
     
-    var weatherIcon = data.list[0].weather[0].icon;
+    var todayDate = dayjs();
+    var weatherIcon = data.weather[0].icon;
     var weatherIconImg = $("<img>");
     weatherIconImg.attr("src", `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`);
     console.log(todayDate);
-    var todayTemp = data.list[0].main.temp;
-    var todayWind = data.list[0].wind.speed;
-    var todayHumid = data.list[0].main.humidity;
+    var todayTemp = data.main.temp;
+    var todayWind = data.wind.speed;
+    var todayHumid = data.main.humidity;
 
-    cityName.append(todayDate);
+    $("#date").text(todayDate.format('MMM D, YYYY'));
     cityName.append(weatherIconImg);
 
     currentTemp.text(todayTemp + " \u00B0F");

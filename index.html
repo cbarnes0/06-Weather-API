@@ -24,7 +24,7 @@
                 <Button> Search </Button>
             </div>
             <div class="weatherToday">
-                <h2 class="city" id="cityname">Atlanta: </h2>
+                <h2 class="city" id="cityname">Atlanta: <span id="date"></span></h2>
                 <p>
                     Temp: <span id="temp"></span> <br> Wind: <span id="wind"></span> <br> Humidity: <span id="humid"></span>
                 </p>
@@ -62,5 +62,10 @@
     </div>    
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
     <script src="./Development/assets/script.js"></script>
+    <script
+      src="https://cdn.jsdelivr.net/npm/dayjs@1.11.3/dayjs.min.js"
+      integrity="sha256-iu/zLUB+QgISXBLCW/mcDi/rnf4m4uEDO0wauy76x7U="
+      crossorigin="anonymous"
+    ></script>
 </body>
 </html>
