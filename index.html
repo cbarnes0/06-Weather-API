@@ -14,52 +14,53 @@
         <h1>Weather Dashboard</h1>
     </header>
 
-    <div class="container" id="toprow">
-        <div class="citySearch">
-            <h2>Search for a City:</h2>
-                <div class="input">
-                    <input placeholder="City">
-                </div> 
-            <Button> Search </Button>
-        </div>
-        <div class="weatherToday">
-            <h2>Atlanta:</h2>
-            <p>
-                Temp: <br> Wind: <br> Humidity:
-            </p>
-        </div>
-    </div>
-
-    <div class="container" id="bottomrow">
-        <div class="previousCities">
-            <Button class="prev"> City </Button>
-            <Button class="prev"> City </Button>
-            <Button class="prev"> City </Button>
-        </div>
-        <div class="weatherFuture">
-            <div class="weatherblock" id="1day">
-
+    <div class="bigContainer">
+        <div class="container" id="toprow">
+            <div class="citySearch">
+                <h2>Search for a City:</h2>
+                    <div class="input">
+                        <input placeholder="City">
+                    </div> 
+                <Button> Search </Button>
             </div>
-            <div class="weatherblock" id="2day">
-                
-            </div>
-            <div class="weatherblock" id="3day">
-                
-            </div>
-            <div class="weatherblock" id="4day">
-                
-            </div>
-            <div class="weatherblock" id="5day">
-                
+            <div class="weatherToday">
+                <h2 class="city" id="cityname">Atlanta:</h2>
+                <p>
+                    Temp: <span id="temp"></span> <br> Wind: <span id="wind"></span> <br> Humidity: <span id="humid"></span>
+                </p>
             </div>
         </div>
-    </div>
-
-
-
-
-    <script src="./Development/assets/script.js">
-
-    </script>
+        <div class="container" id="bottomrow">
+            <div class="previousCities">
+                <Button class="prev"> City </Button>
+                <Button class="prev"> City </Button>
+                <Button class="prev"> City </Button>
+            </div>
+            <div class="weatherFuture">
+                <div class="weatherblock" id="1day">
+                    <h6 id="1dayDate">Date</h6>
+                    <p>Weather stuff</p>
+                </div>
+                <div class="weatherblock" id="2day">
+                    <h6 id="2dayDate">Date</h6>
+                    <p>Weather stuff</p>
+                </div>
+                <div class="weatherblock" id="3day">
+                    <h6 id="3dayDate">Date</h6>
+                    <p>Weather stuff</p>
+                </div>
+                <div class="weatherblock" id="4day">
+                    <h6 id="4dayDate">Date</h6>
+                    <p>Weather stuff</p>
+                </div>
+                <div class="weatherblock" id="5day">
+                    <h6 id="5dayDate">Date</h6>
+                    <p>Weather stuff</p>
+                </div>
+            </div>
+        </div>
+    </div>    
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="./Development/assets/script.js"></script>
 </body>
 </html>
