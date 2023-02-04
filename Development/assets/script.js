@@ -48,7 +48,8 @@ fetch(geoCode, {
   getWeatherdata();
 
 function showWeatherdata(data) {
-    var todayDate = data.list[0].dt_txt;
+    var todayDate = data.list[0].dt_txt.slice(0, 10);
+    
     var weatherIcon = data.list[0].weather[0].icon;
     var weatherIconImg = $("<img>");
     weatherIconImg.attr("src", `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`);
