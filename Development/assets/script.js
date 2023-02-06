@@ -113,14 +113,15 @@ function fiveDayWeatherdata() {
             console.log(data);
            // getFiveDayWeatherData(data);
 
-            for (var i = 2; i < 40; i+=8) {
+            for (var i = 1; i <= 5; i++) {
 
                 var futureCard = document.createElement("div");
                 futureCard.setAttribute("class", "weatherblock-details");
                 $(".weatherFuture").append(futureCard);
 
-            // var futureDate = $("#dayDate" + i);
-            //  futureDate.text(dayjs.duration(i, "d").format('MMM D, YYYY'));
+                var futureDate = document.createElement("p");
+                futureDate.textContent = dayjs.add(i, "d").format('MMM D, YYYY');
+                futureCard.append(futureDate);
 
                 var weatherIcon = data.list[i].weather[0].icon;
                 var weatherIconImg = document.createElement("img");
@@ -138,8 +139,7 @@ function fiveDayWeatherdata() {
                 var humidInfo = document.createElement("p");
                 humidInfo.textContent="Humidity: " + data.list[i].main.humidity + " %";
                 futureCard.append(humidInfo);
-            }
-
+            };
         })
     });
 }
