@@ -1,6 +1,6 @@
 var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
-var city="Atlanta";
-
+var city;
+var dayjs = dayjs();
 var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 
 var savedSearches = [];
@@ -64,16 +64,16 @@ fetch(geoCode, {
 
 function showWeatherdata(data) {
     
-    var todayDate = dayjs();
+   // var todayDate = dayjs();
     var weatherIcon = data.weather[0].icon;
     var weatherIconImg = $("<img>");
     weatherIconImg.attr("src", `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`);
-    console.log(todayDate);
+    // console.log(todayDate);
     var todayTemp = data.main.temp;
     var todayWind = data.wind.speed;
     var todayHumid = data.main.humidity;
     
-    $("#date").text(todayDate.format('MMM D, YYYY'));
+  //  $("#date").text(todayDate.format('MMM D, YYYY'));
     
     currentTemp.text(todayTemp + " \u00B0F");
     currentWSpeed.text(todayWind + " MPH");
@@ -84,6 +84,7 @@ function showWeatherdata(data) {
 
 
 function fiveDayWeatherdata() {
+    var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
     fetch(geoCode, {
         method: 'GET',
     })
@@ -99,7 +100,7 @@ function fiveDayWeatherdata() {
         return { latitude, longitude };
     })
     .then(function({ latitude, longitude}) {
-        var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&appid=${apiKey}`;
+        var fiveDays = `https://api.openweathermap.org/data/2.5/forecast?lat=${latitude}&lon=${longitude}&units=imperial&appid=${apiKey}`;
 
         fetch(fiveDays, {
             method: 'GET',
@@ -108,19 +109,35 @@ function fiveDayWeatherdata() {
         .then(function(response) {
             return response.json();
         })
-        .then(function(response) {
-            console.log(response);
+        .then(function(data) {
+            console.log(data);
            // getFiveDayWeatherData(data);
 
-            for (var i = 1; i <= 5; i++) {
+            for (var i = 2; i < 40; i+=8) {
 
-                var futureCard = $(".weatherblock");
-                futureCard.addClass("weatherblock-details");
+                var futureCard = document.createElement("div");
+                futureCard.setAttribute("class", "weatherblock-details");
+                $(".weatherFuture").append(futureCard);
 
-                var futureDate = $("#dayDate" + i);
-                var dayjs = dayjs();
-                futureDate.text(dayjs.duration(i, "d").format('MMM D, YYYY'));
+            // var futureDate = $("#dayDate" + i);
+            //  futureDate.text(dayjs.duration(i, "d").format('MMM D, YYYY'));
+
+                var weatherIcon = data.list[i].weather[0].icon;
+                var weatherIconImg = document.createElement("img");
+                weatherIconImg.setAttribute("src", "https://openweathermap.org/img/wn/"+weatherIcon+"@2x.png");
+                futureCard.append(weatherIconImg);
                 
+                var tempInfo = document.createElement("p");
+                tempInfo.textContent ="Temp: " + data.list[i].main.temp + " \u00B0F";
+                futureCard.append(tempInfo);
+
+                var windInfo = document.createElement("p");
+                windInfo.textContent ="Wind: " + data.list[i].wind.speed + " MPH";
+                futureCard.append(windInfo);
+
+                var humidInfo = document.createElement("p");
+                humidInfo.textContent="Humidity: " + data.list[i].main.humidity + " %";
+                futureCard.append(humidInfo);
             }
 
         })
