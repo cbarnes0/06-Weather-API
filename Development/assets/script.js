@@ -1,7 +1,7 @@
 var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
-var city;
+var city="Atlanta";
 
-// var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 
 var savedSearches = [];
 
@@ -110,14 +110,22 @@ function fiveDayWeatherdata() {
         })
         .then(function(response) {
             console.log(response);
-            getFiveDayWeatherData();
+           // getFiveDayWeatherData(data);
+
+            for (var i = 1; i <= 5; i++) {
+
+                var futureCard = $(".weatherblock");
+                futureCard.addClass("weatherblock-details");
+
+                var futureDate = $("#dayDate" + i);
+                var dayjs = dayjs();
+                futureDate.text(dayjs.duration(i, "d").format('MMM D, YYYY'));
+                
+            }
 
         })
     });
 }
 fiveDayWeatherdata();
 
-function getFiveDayWeatherData() {
-    // Day + 1 Date Stuff
-    
-}
+// function getFiveDayWeatherData() {}

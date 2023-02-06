@@ -74,12 +74,13 @@ header {
     display: flex;
     flex-direction: row;
 }
-.weatherblock {
+.weatherblock-details {
     border: black solid 1px;
     padding: 3px;
     margin: 3px;
     background-color: blue;
     color: white;
+    width: 20%;
 }
 img {
     width: 50px;
