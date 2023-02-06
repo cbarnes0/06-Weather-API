@@ -5,6 +5,8 @@ var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid
 
 var savedSearches = [];
 
+var previousCityBox = $(".previousCities");
+
 var currentTemp = $("#temp");
 var currentHumid = $("#humid");
 var currentWSpeed = $("#wind");
@@ -26,9 +28,22 @@ $("#search-form").on("submit", function(event) {
         localStoreage.setItem("cities", json.stringify(city));
         fiveDayWeatherdata();
     }
-})
+});
 
+function renderSavedSearches() {
+    for (var i = 0; i < savedSearches.length; i++) {
+        var pastcity = savedSearches[i];
+
+        var button = document.createElement("button");
+        button.textContent = pastcity;
+        li.setAttribute("data-index", i);
+
+        previousCityBox.append(button);
+    }
+};
+// init
 function storedCityNames() {
+
     var storedCities = json.parse(localStorage.getItem("cities"));
 
     if (storedCities !== null) {
@@ -36,7 +51,9 @@ function storedCityNames() {
     }
 
     renderSavedSearches();
-}
+};
+
+storedCityNames();
 
 // Function to get weather data from api after getting coords
 function getWeatherdata() {
