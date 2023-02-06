@@ -1,7 +1,7 @@
 var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
-var city = "Atlanta";
+var city;
 
-var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+// var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 
 var savedSearches = [];
 
@@ -13,10 +13,25 @@ var currentWSpeed = $("#wind");
 var cityName = $("#cityname")
 
 // how to get info from search bar
+$("#search-form").on("submit", function(event) {
+    event.preventDefault();
 
+    city = $("#search-input").val();
+
+    if (cityName === "" || cityName == null) {
+        
+        alert("Please enter name of city.");
+        event.preventDefault();
+    } else {
+        
+        getWeatherdata();
+        fiveDayWeatherdata();
+    }
+})
 
 // Function to get weather data from api after getting coords
 function getWeatherdata() {
+    var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 fetch(geoCode, {
     method: 'GET',
 })
@@ -45,7 +60,7 @@ fetch(geoCode, {
     })
   });
 };
-  getWeatherdata();
+
 
 function showWeatherdata(data) {
     
@@ -57,13 +72,14 @@ function showWeatherdata(data) {
     var todayTemp = data.main.temp;
     var todayWind = data.wind.speed;
     var todayHumid = data.main.humidity;
-
+    
     $("#date").text(todayDate.format('MMM D, YYYY'));
-    cityName.append(weatherIconImg);
-
+    
     currentTemp.text(todayTemp + " \u00B0F");
     currentWSpeed.text(todayWind + " MPH");
     currentHumid.text(todayHumid + "%");
+    $("#cityname").text(city + ": ");
+    $("#cityname").append(weatherIconImg);
 };
 
 
@@ -94,9 +110,14 @@ function fiveDayWeatherdata() {
         })
         .then(function(response) {
             console.log(response);
-
+            getFiveDayWeatherData();
 
         })
     });
 }
 fiveDayWeatherdata();
+
+function getFiveDayWeatherData() {
+    // Day + 1 Date Stuff
+    
+}

@@ -18,13 +18,15 @@
         <div class="container" id="toprow">
             <div class="citySearch">
                 <h2>Search for a City:</h2>
+                <form id="search-form">
                     <div class="input">
-                        <input placeholder="City">
+                        <input type="text" placeholder="City" id="search-input">
                     </div> 
-                <Button> Search </Button>
+                <Button type="submit"> Search </Button>
+                </form>
             </div>
             <div class="weatherToday">
-                <h2 class="city" id="cityname">Atlanta: <span id="date"></span></h2>
+                <h2 class="city" id="cityname"><span id="date"></span></h2>
                 <p>
                     Temp: <span id="temp"></span> <br> Wind: <span id="wind"></span> <br> Humidity: <span id="humid"></span>
                 </p>
@@ -39,23 +41,33 @@
             <div class="weatherFuture">
                 <div class="weatherblock" id="1day">
                     <h6 id="1dayDate">Date</h6>
-                    <p>Weather stuff</p>
+                    <p> 
+                        Temp: <span id="1temp"></span> <br> Wind: <span id="1wind"></span> <br> Humidity: <span id="1humid"></span>
+                    </p>
                 </div>
                 <div class="weatherblock" id="2day">
                     <h6 id="2dayDate">Date</h6>
-                    <p>Weather stuff</p>
+                    <p>
+                        Temp: <span id="2temp"></span> <br> Wind: <span id="2wind"></span> <br> Humidity: <span id="2humid"></span>
+                    </p>
                 </div>
                 <div class="weatherblock" id="3day">
                     <h6 id="3dayDate">Date</h6>
-                    <p>Weather stuff</p>
+                    <p>
+                        Temp: <span id="3temp"></span> <br> Wind: <span id="3wind"></span> <br> Humidity: <span id="3humid"></span>
+                    </p>
                 </div>
                 <div class="weatherblock" id="4day">
                     <h6 id="4dayDate">Date</h6>
-                    <p>Weather stuff</p>
+                    <p>
+                        Temp: <span id="4temp"></span> <br> Wind: <span id="4wind"></span> <br> Humidity: <span id="4humid"></span>
+                    </p>
                 </div>
                 <div class="weatherblock" id="5day">
                     <h6 id="5dayDate">Date</h6>
-                    <p>Weather stuff</p>
+                    <p>
+                        Temp: <span id="5temp"></span> <br> Wind: <span id="5wind"></span> <br> Humidity: <span id="5humid"></span>
+                    </p>
                 </div>
             </div>
         </div>
