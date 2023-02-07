@@ -25,7 +25,7 @@ $("#search-form").on("submit", function(event) {
     } else {
         
         getWeatherdata();
-        localStoreage.setItem("cities", json.stringify(city));
+        localStoreage.setItem("cities", JSON.stringify(city));
         fiveDayWeatherdata();
     }
 });
@@ -44,7 +44,7 @@ function renderSavedSearches() {
 // init
 function storedCityNames() {
 
-    var storedCities = json.parse(localStorage.getItem("cities"));
+    var storedCities = JSON.parse(localStorage.getItem("cities"));
 
     if (storedCities !== null) {
         savedSearches = storedCities;
