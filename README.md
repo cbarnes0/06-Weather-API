@@ -14,4 +14,4 @@ The aim of the project was to make a weather dashboard using a weather API. The 
 
 ## Link
 
-https://cbarnes0.github.io/Work-Day-Scheduler/
+https://cbarnes0.github.io/06-Weather-API/
