@@ -1,16 +1,28 @@
 var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
-var city;
 var dayjs = dayjs();
+let city;
 var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 
 var savedSearches = [];
 
-var previousCityBox = $(".previousCities");
+var previousCityBox = document.querySelector(".previousCities")
+previousCityBox.addEventListener("click", function() {
+    var buttontext = $(".newbtn").text();
+    city = buttontext
+    
+    console.log(city);
+    // getWeatherdata();
+    // fiveDayWeatherdata();
+});
 
 var currentTemp = $("#temp");
 var currentHumid = $("#humid");
 var currentWSpeed = $("#wind");
 var cityName = $("#cityname")
+
+function prevCityWeather() {
+    
+};
 
 // how to get info from search bar
 $("#search-form").on("submit", function(event) {
@@ -24,38 +36,63 @@ $("#search-form").on("submit", function(event) {
         event.preventDefault();
     } else {
         
+        addButton();
         getWeatherdata();
-        localStoreage.setItem("cities", JSON.stringify(city));
         fiveDayWeatherdata();
+        storeInfo(city);
     }
 });
+    
+   // Initialize our Dataset (KEY)
+  // localStorage.setItem("cities", "[]")
 
-function renderSavedSearches() {
-    for (var i = 0; i < savedSearches.length; i++) {
-        var pastcity = savedSearches[i];
+function addButton() {
 
-        var button = document.createElement("button");
-        button.textContent = pastcity;
-        li.setAttribute("data-index", i);
-
-        previousCityBox.append(button);
-    }
-};
-// init
-function storedCityNames() {
-
-    var storedCities = JSON.parse(localStorage.getItem("cities"));
-
-    if (storedCities !== null) {
-        savedSearches = storedCities;
-    }
-
-    renderSavedSearches();
+   let newBtn = $("<button>").text(city);
+   newBtn.addClass(".newbtn");
+   $(".previousCities").append(newBtn);
 };
 
-storedCityNames();
+function storeInfo(city) {
+    // LOCAL STORAGE //
+     // Add the New City to Local Storage
+ // 1) Is there existing data? 
+ let history = localStorage.getItem('cities');
+//  console.log("History: ", history);
+//  console.log("History Type: ", typeof history);
+ 
+ // 2) Convert the STRING DATA to an JS OBJECT
+ let jsArr = JSON.parse(history);
+//  console.log("Object: ", jsArr);
+//  console.log("Object Type: ", typeof jsArr);
 
-// Function to get weather data from api after getting coords
+ // 3) Add our NEW DATA
+ jsArr.push(city);
+
+ // -- TESTING / VERIFY -- //
+ // console.log(jsArr);
+ 
+ // 4) CONVERT js tp JSON
+ let JSONarr = JSON.stringify(jsArr);
+ // console.log(JSONarr);
+
+ // 5) UPDATE / SAVE to local Storage
+ localStorage.setItem('cities', JSONarr);
+}
+
+function getButtons() {
+    let history = localStorage.getItem('cities');
+    listOfPrevCit = JSON.parse(history);
+    console.log(listOfPrevCit);
+
+    for (i = 0; i < listOfPrevCit.length; i ++) {
+        let newBtn = $("<button>").text(listOfPrevCit[i]);
+        $(".previousCities").append(newBtn);
+    }
+}
+
+getButtons();
+
 function getWeatherdata() {
     var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 fetch(geoCode, {
@@ -139,6 +176,9 @@ function fiveDayWeatherdata() {
             console.log(data);
            // getFiveDayWeatherData(data);
 
+           $(".weatherFuture").empty();
+          //  $(".weatherFuture").remove();
+
             for (var i = 1; i <= 5; i++) {
 
                 var futureCard = document.createElement("div");
@@ -169,6 +209,38 @@ function fiveDayWeatherdata() {
         })
     });
 }
-fiveDayWeatherdata();
 
-// function getFiveDayWeatherData() {}
+// -- NOTES -- //
+
+
+    // -- OPERATIONS on Dynmaic Content -- // 
+    // WE create a Button 
+        // button content to have CITY NAME
+        // event listener
+        
+    // ADD the new Button (append to our container) -- DRY -- 
+
+
+/*
+    // use Local Storage (order of operations)
+
+    localStorage.getItem('key')
+    localStorage.setItem('key', "{ "name": "Bill", "age": "23"}")
+    localStorage.clear()
+
+    let arr = []
+    arr.push(2);
+
+    // Parsing Methods
+    JSON.parse()   // convert JSON into JS object
+    JSON.stringify(arr)  // convert JS into JSON
+
+ {
+    "key": "value"
+ }
+
+ {
+    Key: 37
+ }
+*/ 
+
