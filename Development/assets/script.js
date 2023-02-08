@@ -1,28 +1,20 @@
 var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
 var dayjs = dayjs();
 let city;
+// Geocode used for later api links
 var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
-
-var savedSearches = [];
-
-var previousCityBox = document.querySelector(".previousCities")
-previousCityBox.addEventListener("click", function() {
-    var buttontext = $(".newbtn").text();
-    city = buttontext
-    
-    console.log(city);
-    // getWeatherdata();
-    // fiveDayWeatherdata();
-});
-
 var currentTemp = $("#temp");
 var currentHumid = $("#humid");
 var currentWSpeed = $("#wind");
-var cityName = $("#cityname")
+var cityName = $("#cityname");
 
-function prevCityWeather() {
-    
-};
+// Event listener for previous buttons to make them functional
+$(".previousCities").on("click", "button", function() {
+
+city = $(this).text();
+getWeatherdata(city);
+fiveDayWeatherdata(city);
+});
 
 // how to get info from search bar
 $("#search-form").on("submit", function(event) {
@@ -39,13 +31,26 @@ $("#search-form").on("submit", function(event) {
         addButton();
         getWeatherdata();
         fiveDayWeatherdata();
-        storeInfo(city);
+        storeInfo();
     }
 });
     
-   // Initialize our Dataset (KEY)
-  // localStorage.setItem("cities", "[]")
+// sets the storage when it is empty to then be filled and doesn't clear it if it's working
+// statement kept to check functionallity later
+function clearStorageInit() {
+    if (localStorage.getItem("cities") === null) {
+        localStorage.setItem("cities", "[]")
+       // console.log ("yay!");
+    } else {
+       // console.log("It's working!");
+    };
+        
+};
 
+// calls this function
+ clearStorageInit();
+
+ // add
 function addButton() {
 
    let newBtn = $("<button>").text(city);
@@ -53,46 +58,36 @@ function addButton() {
    $(".previousCities").append(newBtn);
 };
 
-function storeInfo(city) {
-    // LOCAL STORAGE //
-     // Add the New City to Local Storage
- // 1) Is there existing data? 
+// Local Storage .. storing and checking information
+function storeInfo() {
+    
  let history = localStorage.getItem('cities');
-//  console.log("History: ", history);
-//  console.log("History Type: ", typeof history);
- 
- // 2) Convert the STRING DATA to an JS OBJECT
- let jsArr = JSON.parse(history);
-//  console.log("Object: ", jsArr);
-//  console.log("Object Type: ", typeof jsArr);
 
- // 3) Add our NEW DATA
+ let jsArr = JSON.parse(history);
+
  jsArr.push(city);
 
- // -- TESTING / VERIFY -- //
- // console.log(jsArr);
- 
- // 4) CONVERT js tp JSON
  let JSONarr = JSON.stringify(jsArr);
- // console.log(JSONarr);
 
- // 5) UPDATE / SAVE to local Storage
  localStorage.setItem('cities', JSONarr);
-}
+};
 
+// once info is stored, this is used to keep them as buttons once the page is refreshed
 function getButtons() {
     let history = localStorage.getItem('cities');
     listOfPrevCit = JSON.parse(history);
-    console.log(listOfPrevCit);
 
     for (i = 0; i < listOfPrevCit.length; i ++) {
         let newBtn = $("<button>").text(listOfPrevCit[i]);
+        newBtn.addClass("newBtn");
         $(".previousCities").append(newBtn);
     }
 }
 
+// calls function on refresh
 getButtons();
 
+// used to get initial weather data
 function getWeatherdata() {
     var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 fetch(geoCode, {
@@ -124,20 +119,15 @@ fetch(geoCode, {
   });
 };
 
-
+// this function shows the data that was just recived and adds the values
 function showWeatherdata(data) {
-    
-   // var todayDate = dayjs();
+
     var weatherIcon = data.weather[0].icon;
     var weatherIconImg = $("<img>");
     weatherIconImg.attr("src", `https://openweathermap.org/img/wn/${weatherIcon}@2x.png`);
-    // console.log(todayDate);
     var todayTemp = data.main.temp;
     var todayWind = data.wind.speed;
     var todayHumid = data.main.humidity;
-    
-  //  $("#date").text(todayDate.format('MMM D, YYYY'));
-    
     currentTemp.text(todayTemp + " \u00B0F");
     currentWSpeed.text(todayWind + " MPH");
     currentHumid.text(todayHumid + "%");
@@ -145,7 +135,7 @@ function showWeatherdata(data) {
     $("#cityname").append(weatherIconImg);
 };
 
-
+// this function does something similar to the previous but once it retrieves the data it adds the features dynamically
 function fiveDayWeatherdata() {
     var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
     fetch(geoCode, {
@@ -173,11 +163,9 @@ function fiveDayWeatherdata() {
             return response.json();
         })
         .then(function(data) {
-            console.log(data);
-           // getFiveDayWeatherData(data);
-
+        
+        // clears weather when called so that dynamic elements dont stack
            $(".weatherFuture").empty();
-          //  $(".weatherFuture").remove();
 
             for (var i = 1; i <= 5; i++) {
 
@@ -208,39 +196,4 @@ function fiveDayWeatherdata() {
             };
         })
     });
-}
-
-// -- NOTES -- //
-
-
-    // -- OPERATIONS on Dynmaic Content -- // 
-    // WE create a Button 
-        // button content to have CITY NAME
-        // event listener
-        
-    // ADD the new Button (append to our container) -- DRY -- 
-
-
-/*
-    // use Local Storage (order of operations)
-
-    localStorage.getItem('key')
-    localStorage.setItem('key', "{ "name": "Bill", "age": "23"}")
-    localStorage.clear()
-
-    let arr = []
-    arr.push(2);
-
-    // Parsing Methods
-    JSON.parse()   // convert JSON into JS object
-    JSON.stringify(arr)  // convert JS into JSON
-
- {
-    "key": "value"
- }
-
- {
-    Key: 37
- }
-*/ 
-
+};
