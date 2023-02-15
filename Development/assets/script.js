@@ -2,7 +2,7 @@ var apiKey = "e90ad556cc55926905eb32cc8f08f4f3";
 var dayjs = dayjs();
 let city;
 // Geocode used for later api links
-var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+var geoCode = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 var currentTemp = $("#temp");
 var currentHumid = $("#humid");
 var currentWSpeed = $("#wind");
@@ -89,7 +89,7 @@ getButtons();
 
 // used to get initial weather data
 function getWeatherdata() {
-    var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+    var geoCode = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
 fetch(geoCode, {
     method: 'GET',
 })
