@@ -137,7 +137,7 @@ function showWeatherdata(data) {
 
 // this function does something similar to the previous but once it retrieves the data it adds the features dynamically
 function fiveDayWeatherdata() {
-    var geoCode = "http://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
+    var geoCode = "https://api.openweathermap.org/geo/1.0/direct?q=" + city + "&appid=" + apiKey;
     fetch(geoCode, {
         method: 'GET',
     })
